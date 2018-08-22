@@ -1,4 +1,10 @@
 #!/usr/bin/env python
+'''
+Simple Web Scraper
+
+Given a website url, this program finds all urls, email addresses
+and phone numbers in website's html code and prints them.
+'''
 import sys
 import re
 import requests
@@ -59,13 +65,17 @@ def main(args):
     parsed_args = parser.parse_args(args)
     if parsed_args.website:
         text = get_response(parsed_args.website)
+        urls = scrape_urls(text)
+        emails = scrape_emails(text)
+        phonenums = scrape_phonenums(text)
+
         print '\n'
         print 'URLS:', '\n'
-        print scrape_urls(text), '\n'
+        print urls if urls else None, '\n'
         print 'EMAILS:', '\n'
-        print scrape_emails(text), '\n'
+        print emails if emails else None, '\n'
         print 'PHONE NUMBERS:', '\n'
-        print scrape_phonenums(text), '\n'
+        print phonenums if phonenums else None, '\n'
     else:
         parser.print_usage()
         sys.exit(1)
